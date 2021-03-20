@@ -86,7 +86,7 @@ gulp.task('build:html', function () {
             encodeHtmlAttrib: mancha.encodeHtmlAttrib,
             console: console,
             canonical: null
-        }))
+        }, './src',))
         .pipe(gulp.dest('public'));
 });
 
