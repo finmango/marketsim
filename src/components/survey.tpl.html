@@ -12,6 +12,11 @@
             width: 100%;
         }
 
+        .screen#nav button {
+            line-height: 2em;
+            padding-bottom: 0.2em;
+        }
+
         #nav-spacer {
             display: flex;
             flex: 1;
@@ -62,8 +67,8 @@
         </h2>
 
         <p class="centered one">
-            No form of investment is <b>risk-free</b>. Even if you choose not to invest on the
-            market, cash is subject to loss of value due to <b>inflation</b>. Since it's not
+            No form of investment is <b>risk-free</b>. Even if you choose not to invest in the
+            stock market, cash is subject to loss of value due to <b>inflation</b>. Since it's not
             possible to avoid any type of risk, a more successful strategy is to understand the
             risks associated with different types of investments and work on a plan which fits your
             timelines and risk tolerance.
@@ -97,9 +102,9 @@
 
         <p class="centered one">
             Similarly, when the company grows in value, the value of your shares grows
-            proportionally. When you own 1% of a company when it's worth $1 million, that is worth
-            $10,000. If the company grows and its worth becomes $10 million, then the fraction of
-            the company that you own is worth $100,000.
+            proportionally. If you own 1% of a company when it's worth $1 million, your investment
+            is worth $10,000. If the company grows and its total value becomes $10 million, then the
+            fraction of the company that you own is worth $100,000.
         </p>
 
     </div>
@@ -114,15 +119,15 @@
             A company's dividends given to shareholders can never be negative; they can however be
             zero, and this is the case with many of the companies in the stock market. That doesn't
             necessarily mean that a company is strictly unprofitable, it could mean that a company
-            chooses to reinvest all profits into its continued growth.
+            chooses to reinvest all of its profits into its continued growth.
         </p>
 
         <p class="centered one">
             On the other hand, how much a company is worth can decrease in value. Even though a
             company can never be worth a negative value, your investment returns can have negative
-            growth. For example, if you own 1% of a company and its value decreased by half, then
-            half of the money you invested in that company will be lost. In the worst case scenario,
-            a company can go bankrupt and your shares of that company will be worthless.
+            growth. For example, if you own shares of a company and its value decreased by half,
+            then half of the money you invested in that company will be lost. In the worst case
+            scenario, a company can go bankrupt and your shares of that company will be worthless.
         </p>
 
     </div>
@@ -136,16 +141,16 @@
         <p class="centered one">
             Because of the potential negative returns, your investments in the stock market can in
             fact decrease in value. The ups and downs in the stock market are known as
-            <b>market volatility</b> This scares many risk-averse people, who prefer to keep all of
-            their savings out of the stock market altogether. We at <b>FinMango</b> strongly
-            encourage everyone instead to learn about the risks and deploy a strategy that serves
-            your long-term goals.
+            <b>market volatility</b>. This scares many risk-averse people, who prefer to keep their
+            savings out of the stock market altogether. We at <b>FinMango</b> strongly encourage
+            everyone instead to learn about the risks and deploy a strategy that serves your
+            long-term goals.
         </p>
 
         <p class="centered one">
-            Picking and individual company is more risky than investing in several of them, since
-            any one company can fail but the more companies you invest in the less likely it is that
-            they will all fail. An extreme example of this are <b>index funds</b>.
+            Picking an individual company is more risky than investing in several of them, since
+            any one company can fail; but the more companies you invest in the less likely it is
+            that they will all fail. An extreme example of this are <b>index funds</b>.
         </p>
 
     </div>
@@ -160,15 +165,15 @@
             <b>Index funds</b> are a financial instrument which allow you to invest in a large
             number of companies, minimizing the risk of all of them going bankrupt virtually to
             zero. They are widely considered the safest way to invest in the stock market, with a
-            proven track record going back over a century.
+            proven track record going back many decades.
         </p>
 
         <p class="centered one">
             While the stock market as a whole has had periods of negative growth, which in economic
             terms are known as <b>recessions</b>, historically it has always recovered and surpassed
-            previous historical high values. This essentially means that, if you were a patient
-            enough investor, there has <b>never been a bad time</b> in history to invest in the
-            stock market.
+            its previous historically high values. This essentially means that, if you are a patient
+            investor, there has <b>never been a bad time</b> in history to invest in the stock
+            market.
         </p>
 
     </div>
@@ -209,6 +214,7 @@
 
                     currScreen.classList.remove('screen-visible');
                     nextScreen.classList.add('screen-visible');
+                    window.scrollTo(0, 0);
 
                     screenIdx++;
                 } else {

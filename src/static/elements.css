@@ -1,7 +1,10 @@
-header * {
-    box-sizing: border-box;
-    flex: 1 1 auto;
-    padding: 1em 0.2em;
+header {
+    height: 0;
+    z-index: 1;
+}
+
+main {
+    padding-top: 128px;
 }
 
 .single-column {
@@ -16,6 +19,12 @@ input#location-selector {
     padding-bottom: .2em;
 }
 
+header * {
+    box-sizing: border-box;
+    flex: 1 1 auto;
+    padding: 1em 0.2em;
+}
+
 header h1 {
     font-size: 48px;
     padding-top: 0.8em;
@@ -23,6 +32,7 @@ header h1 {
 
 
 /* Fix for range selector */
+
 input[type=range] {
     width: calc(100% - 1.2em);
 }

@@ -24,7 +24,7 @@
                 <label for="expected-return">
                     Expected Rate of Return
                     </br>
-                    <small>Yearly growth percentage for your investments.</small>
+                    <small>Yearly growth percentage for your investments, historically 9.2% for the S&P500.</small>
                 </label>
                 <input type="number" pattern="/d*" id="expected-return" min="0" max="100" value="9.2" />
             </div>
@@ -108,11 +108,16 @@
 
                 const chartObject = new google.visualization.AreaChart(chartElem);
                 chartObject.draw(dataTable, Object.assign({}, GOOGLE_CHARTS_CONFIG, {
-                    title: `Market Simulator by FinMango`,
+                    title: `🥭 Market Simulator`,
                     curveType: 'function',
                     series: [{ 'color': '#757575' }],
                     intervals: { 'style': 'area' },
-                    vAxis: { textPosition: 'out', minValue: -100, format: '#\'%\'' },
+                    vAxis: {
+                        format: '#\'%\'',
+                        minValue: -100,
+                        textPosition: 'out',
+                        textStyle: { fontName: 'Goldman Sans' },
+                    },
                     interpolateNulls: true,
                     annotations: {
                         style: 'line'
