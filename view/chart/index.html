@@ -1,0 +1,112 @@
+<!DOCTYPE html><html><!-- HTML page head --><head>
+    <!-- HTML metadata -->
+    <meta charset="UTF-8">
+    <title>FinMango Market Simulator</title>
+    <meta name="description" content="Market Simulator, made by FinMango">
+    <link rel="icon" type="image/ico" href="../../../static/favicon.ico">
+
+    <!-- Add to homescreen for Safari on iOS -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="FinMango Market Simulator">
+
+    <!-- Homescreen icons -->
+    <link rel="apple-touch-icon" href="../../../static/favicon.ico">
+
+    <!-- Capabilities-related metadata -->
+    <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
+
+    <!-- Google Charts -->
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+
+    <!-- MomentJS -->
+    <script type="text/javascript" src="../../../third_party/moment/min/moment.min.js"></script>
+
+    <!-- Numbers.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/numbers.js/0.7.0/numbers.min.js"></script>
+
+    <!-- Custom styles and fonts -->
+    <link rel="stylesheet" href="https://fonts.cdnfonts.com/css/goldman-sans">
+    <link rel="stylesheet" href="../../../third_party/picnic/picnic.min.css">
+    <link rel="stylesheet" href="../../../static/styles.min.css">
+
+    <!-- Polyfills, custom functions and constants -->
+    <script type="text/javascript" src="../../../static/cache.min.js"></script>
+    <script type="text/javascript" src="../../../static/formatter.min.js"></script>
+    <script type="text/javascript" src="../../../static/component-helper.min.js"></script>
+    <script type="text/javascript" src="../../../static/polyfills.min.js"></script>
+    <script type="text/javascript">const DEFAULT_OPTIONS={};CURRENT_OPTIONS=Object.keys(DEFAULT_OPTIONS).reduce((t,e)=>Object.assign(t,{[e]:sessionStorage.getItem(e)||DEFAULT_OPTIONS[e]}),{}),GOOGLE_CHARTS_CONFIG=window.GOOGLE_CHARTS_CONFIG||{theme:"material",fontName:"Goldman Sans",colors:["{{theme-primary}}"],legend:{position:CURRENT_OPTIONS.chart_legend_position||"none"},chartArea:{width:"100%",height:"100%",left:parseInt(CURRENT_OPTIONS.chart_padding_left||64),bottom:parseInt(CURRENT_OPTIONS.chart_padding_bottom||48),top:parseInt(CURRENT_OPTIONS.chart_padding_top||24)},titlePosition:"in",axisTitlesPosition:"in",hAxis:{textPosition:"bottom",textStyle:{fontName:"Goldman Sans"}},vAxis:{textPosition:"out",viewWindow:{min:0},textStyle:{fontName:"Goldman Sans"}},height:parseInt(CURRENT_OPTIONS.chart_height||300)};</script>
+
+
+
+</head><body>
+    <!-- Page header -->
+    <header class="flex center one">
+    <div>
+        <a class="centered uppercase" target="_blank" href="https://finmango.org" style="display: block; padding: 0;">
+            <img class="centered" src="../../../static/logo.png" height="128" width="auto">
+        </a>
+    </div>
+</header>
+
+    <main class="single-column-wide" style="margin-top: auto; margin-bottom: auto;">
+
+        <div class="spacer"></div>
+
+        <div id="fire-calculator-chart">
+
+    <div>
+        <button class="centered" style="text-transform: uppercase;" onclick="simulate()">
+            Re-Run Simulation
+        </button>
+    </div>
+
+    <div id="chart-container" class="chart-container"></div>
+
+    <small style="display: inline-block; width: 100%; text-align: right;">
+        This simulation assumes a log-normal distribution of market returns with the estimated
+        return rate and volatility as the mean and standard deviation.
+    </small>
+
+    <div class="spacer"></div>
+
+    <details>
+        <summary>Simulator Options</summary>
+
+        <form class="flex one two-600">
+
+            <div>
+                <label for="expected-return">
+                    Expected Rate of Return
+                    <br>
+                    <small>Yearly growth percentage for your investments.</small>
+                </label>
+                <input type="number" pattern="/d*" id="expected-return" min="0" max="100" value="9.2">
+            </div>
+
+            <div>
+                <label for="income-net">
+                    Market Volatility
+                    <br>
+                    <small>Estimated market volatility, historically 10-20% as per the CBOE Volatility Index</small>
+                </label>
+                <input type="number" pattern="/d*" id="market-volatility" min="0" value="20">
+            </div>
+
+        </form>
+    </details>
+
+    <script async>function monthlyToAnnualRate(t){return Math.pow(t+1,12)-1}function annualToMonthlyRate(t){return Math.pow(t+1,1/12)-1}!async function(){const t=document.currentScript.parentElement;await CacheHelper.loadGoogleCharts();const e=t.querySelector("#chart-container"),n=t.querySelector("#expected-return"),a=t.querySelector("#market-volatility");window.simulate=function(){const t=Number(n.value)/100,o=Number(a.value)/100,r=(annualToMonthlyRate(t),Math.log(1+t)),l=numbers.random.distribution.logNormal(120,r,o).map(t=>1+(t-1)/12),u=[];let i={bankrupt:!1},s=1;for(let t=0;t<120;t++){const e=(Math.round(t/12*2)/2).toFixed(1).replace(".0","");u.push({month:t,year:Math.floor(t/12),xlabel:`${e} years`,date:`${Math.floor(t/12)} years and ${t%12} months`,return:100*(s-1)}),s<=.01&&!i.bankrupt&&(i.bankrupt=!0,u[u.length-1].bankrupt=!0,u[u.length-1].annotation="BANKRUPTCY"),s*=l[t]}console.log(u);const c=t=>`${t.date}\n`+`${Formatter.percent(t.return/100)} Return`,m=new google.visualization.DataTable;m.addColumn({label:"Time",type:"string"}),m.addColumn({type:"string",role:"annotation"}),m.addColumn({label:"Return",type:"number"}),m.addColumn({type:"string",role:"tooltip"}),m.addRows(u.map(t=>[t.xlabel,t.annotation,t.return,c(t)])),new google.visualization.AreaChart(e).draw(m,Object.assign({},GOOGLE_CHARTS_CONFIG,{title:"Market Simulator by FinMango",curveType:"function",series:[{color:"#757575"}],intervals:{style:"area"},vAxis:{textPosition:"out",minValue:-100,format:"#'%'"},interpolateNulls:!0,annotations:{style:"line"}})),e.style.backgroundImage="none"},(new ComponentHelper).addFormData(t.querySelector("form")).onLoad(simulate).init()}();</script>
+</div>
+
+        <!-- Add some whitespace to the bottom -->
+        <div class="spacer"></div>
+        <div class="spacer"></div>
+    </main>
+
+    <!-- Load analytics at the end of the page -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-1ZDPLWFCLX"></script>
+<script>function gtag(){dataLayer.push(arguments)}window.dataLayer=window.dataLayer||[],gtag("js",new Date),gtag("config","G-1ZDPLWFCLX");</script>
+
+
+</body></html>

@@ -1,0 +1,211 @@
+<!DOCTYPE html><html><!-- HTML page head --><head>
+    <!-- HTML metadata -->
+    <meta charset="UTF-8">
+    <title>FinMango Market Simulator</title>
+    <meta name="description" content="Market Simulator, made by FinMango">
+    <link rel="icon" type="image/ico" href="../static/favicon.ico">
+
+    <!-- Add to homescreen for Safari on iOS -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="FinMango Market Simulator">
+
+    <!-- Homescreen icons -->
+    <link rel="apple-touch-icon" href="../static/favicon.ico">
+
+    <!-- Capabilities-related metadata -->
+    <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
+
+    <!-- Google Charts -->
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+
+    <!-- MomentJS -->
+    <script type="text/javascript" src="../third_party/moment/min/moment.min.js"></script>
+
+    <!-- Numbers.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/numbers.js/0.7.0/numbers.min.js"></script>
+
+    <!-- Custom styles and fonts -->
+    <link rel="stylesheet" href="https://fonts.cdnfonts.com/css/goldman-sans">
+    <link rel="stylesheet" href="../third_party/picnic/picnic.min.css">
+    <link rel="stylesheet" href="../static/styles.min.css">
+
+    <!-- Polyfills, custom functions and constants -->
+    <script type="text/javascript" src="../static/cache.min.js"></script>
+    <script type="text/javascript" src="../static/formatter.min.js"></script>
+    <script type="text/javascript" src="../static/component-helper.min.js"></script>
+    <script type="text/javascript" src="../static/polyfills.min.js"></script>
+    <script type="text/javascript">const DEFAULT_OPTIONS={};CURRENT_OPTIONS=Object.keys(DEFAULT_OPTIONS).reduce((t,e)=>Object.assign(t,{[e]:sessionStorage.getItem(e)||DEFAULT_OPTIONS[e]}),{}),GOOGLE_CHARTS_CONFIG=window.GOOGLE_CHARTS_CONFIG||{theme:"material",fontName:"Goldman Sans",colors:["{{theme-primary}}"],legend:{position:CURRENT_OPTIONS.chart_legend_position||"none"},chartArea:{width:"100%",height:"100%",left:parseInt(CURRENT_OPTIONS.chart_padding_left||64),bottom:parseInt(CURRENT_OPTIONS.chart_padding_bottom||48),top:parseInt(CURRENT_OPTIONS.chart_padding_top||24)},titlePosition:"in",axisTitlesPosition:"in",hAxis:{textPosition:"bottom",textStyle:{fontName:"Goldman Sans"}},vAxis:{textPosition:"out",viewWindow:{min:0},textStyle:{fontName:"Goldman Sans"}},height:parseInt(CURRENT_OPTIONS.chart_height||300)};</script>
+
+
+
+</head><body>
+    <!-- Page header -->
+    <header class="flex center one">
+    <div>
+        <a class="centered uppercase" target="_blank" href="https://finmango.org" style="display: block; padding: 0;">
+            <img class="centered" src="../static/logo.png" height="128" width="auto">
+        </a>
+    </div>
+</header>
+
+    <main class="single-column-wide" style="margin-top: auto; margin-bottom: auto;">
+
+        <div id="survey-container">
+    <style>#survey-container{height:100%;min-height:600px;display:flex;flex-direction:column}.screen#nav{display:block;width:100%}#nav-spacer{display:flex;flex:1;flex-grow:1;align-items:stretch}.animated{transition:all .5s ease-in-out}.screen{height:0;opacity:0;overflow:hidden;max-width:600px;margin-left:auto;margin-right:auto;display:block;justify-content:center;flex-direction:column}.screen-visible{height:auto;opacity:1;overflow:initial;margin-bottom:auto;display:flex}.screen h2{font-size:xx-large;text-transform:uppercase}.screen p{text-align:justify}</style>
+
+    <div class="screen animated">
+
+        <h2 class="centered">
+            Stock Market Simulator
+        </h2>
+
+        <p class="centered one">
+            No form of investment is <b>risk-free</b>. Even if you choose not to invest on the
+            market, cash is subject to loss of value due to <b>inflation</b>. Since it's not
+            possible to avoid any type of risk, a more successful strategy is to understand the
+            risks associated with different types of investments and work on a plan which fits your
+            timelines and risk tolerance.
+        </p>
+
+        <p class="centered one">
+            This tool was designed to let you explore the effect of different risk levels and how
+            they affect your investments over the short and long term.
+        </p>
+
+    </div>
+
+    <div class="screen animated">
+
+        <h2 class="centered">
+            What is the Stock Market?
+        </h2>
+
+        <p class="centered one">
+            When people say <b>stock market</b>, also known as equity market, they typically refer
+            to the collection of markets and exchanges where one can purchase <b>stocks</b>.
+        </p>
+
+        <p class="centered one">
+            For the purpose of this lesson, stocks can be simply thought of as partial ownership of
+            a company. This is why they are also known as <b>shares</b> — because a group of
+            investors share the ownership of the company. When you own shares worth 1% of a company,
+            you are entitled to 1% of the money the company earns after all the expenses are paid —
+            these are called <b>dividends</b>.
+        </p>
+
+        <p class="centered one">
+            Similarly, when the company grows in value, the value of your shares grows
+            proportionally. When you own 1% of a company when it's worth $1 million, that is worth
+            $10,000. If the company grows and its worth becomes $10 million, then the fraction of
+            the company that you own is worth $100,000.
+        </p>
+
+    </div>
+
+    <div class="screen animated">
+
+        <h2 class="centered">
+            Positive and Negative Returns
+        </h2>
+
+        <p class="centered one">
+            A company's dividends given to shareholders can never be negative; they can however be
+            zero, and this is the case with many of the companies in the stock market. That doesn't
+            necessarily mean that a company is strictly unprofitable, it could mean that a company
+            chooses to reinvest all profits into its continued growth.
+        </p>
+
+        <p class="centered one">
+            On the other hand, how much a company is worth can decrease in value. Even though a
+            company can never be worth a negative value, your investment returns can have negative
+            growth. For example, if you own 1% of a company and its value decreased by half, then
+            half of the money you invested in that company will be lost. In the worst case scenario,
+            a company can go bankrupt and your shares of that company will be worthless.
+        </p>
+
+    </div>
+
+    <div class="screen animated">
+
+        <h2 class="centered">
+            Stock Market Volatility
+        </h2>
+
+        <p class="centered one">
+            Because of the potential negative returns, your investments in the stock market can in
+            fact decrease in value. The ups and downs in the stock market are known as
+            <b>market volatility</b> This scares many risk-averse people, who prefer to keep all of
+            their savings out of the stock market altogether. We at <b>FinMango</b> strongly
+            encourage everyone instead to learn about the risks and deploy a strategy that serves
+            your long-term goals.
+        </p>
+
+        <p class="centered one">
+            Picking and individual company is more risky than investing in several of them, since
+            any one company can fail but the more companies you invest in the less likely it is that
+            they will all fail. An extreme example of this are <b>index funds</b>.
+        </p>
+
+    </div>
+
+    <div class="screen animated">
+
+        <h2 class="centered">
+            Evaluating and Mitigating Risk
+        </h2>
+
+        <p class="centered one">
+            <b>Index funds</b> are a financial instrument which allow you to invest in a large
+            number of companies, minimizing the risk of all of them going bankrupt virtually to
+            zero. They are widely considered the safest way to invest in the stock market, with a
+            proven track record going back over a century.
+        </p>
+
+        <p class="centered one">
+            While the stock market as a whole has had periods of negative growth, which in economic
+            terms are known as <b>recessions</b>, historically it has always recovered and surpassed
+            previous historical high values. This essentially means that, if you were a patient
+            enough investor, there has <b>never been a bad time</b> in history to invest in the
+            stock market.
+        </p>
+
+    </div>
+
+    <div class="screen animated">
+
+        <h2 class="centered">
+            Simulating Stock Market Returns
+        </h2>
+
+        <p class="centered one">
+            To illustrate all the concepts you just learned about <b>shares</b>, the
+            <b>stock market</b>, <b>index funds</b> and <b>volatility</b>, we built this tool to
+            simulate different scenarios using probabilities. Let's see what happens!
+        </p>
+
+    </div>
+
+    <div id="nav-spacer"></div>
+
+    <div class="screen animated" id="nav">
+        <div class="centered flex one">
+            <button id="next">NEXT</button>
+            <button onclick="window.location.reload()">START OVER</button>
+        </div>
+    </div>
+
+    <script async>!async function(){const e=document.currentScript.parentElement;let c=0;const s=[].slice.call(e.querySelectorAll("div.screen"),0,-1);e.querySelector("#next").addEventListener("click",t=>{if(c+1<s.length){const e=s[c],t=s[c+1];e.classList.remove("screen-visible"),t.classList.add("screen-visible"),c++}else{const c=[].slice.call(e.querySelectorAll("input, select")),s=window.location.pathname.includes("/embed/")?"../embed/chart/":"../view/chart/",t=new URL(s,window.location.href);c.forEach(e=>{t.searchParams.set(e.id,e.value)}),window.location=t}}),e.querySelector("div.screen:first-of-type").classList.add("screen-visible"),e.querySelector("#nav").classList.add("screen-visible")}();</script>
+</div>
+
+        <!-- Add some whitespace to the bottom -->
+        <div class="spacer"></div>
+        <div class="spacer"></div>
+    </main>
+
+    <!-- Load analytics at the end of the page -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-1ZDPLWFCLX"></script>
+<script>function gtag(){dataLayer.push(arguments)}window.dataLayer=window.dataLayer||[],gtag("js",new Date),gtag("config","G-1ZDPLWFCLX");</script>
+
+
+</body></html>
