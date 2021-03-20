@@ -1,0 +1,134 @@
+<div id="fire-calculator-chart">
+
+    <div>
+        <button class="centered" style="text-transform: uppercase;" onclick="simulate()">
+            Re-Run Simulation
+        </button>
+    </div>
+
+    <div id="chart-container" class="chart-container"></div>
+
+    <small style="display: inline-block; width: 100%; text-align: right;">
+        This simulation assumes a log-normal distribution of market returns with the estimated
+        return rate and volatility as the mean and standard deviation.
+    </small>
+
+    <div class="spacer"></div>
+
+    <details>
+        <summary>Simulator Options</summary>
+
+        <form class="flex one two-600">
+
+            <div>
+                <label for="expected-return">
+                    Expected Rate of Return
+                    </br>
+                    <small>Yearly growth percentage for your investments.</small>
+                </label>
+                <input type="number" pattern="/d*" id="expected-return" min="0" max="100" value="9.2" />
+            </div>
+
+            <div>
+                <label for="income-net">
+                    Market Volatility
+                    </br>
+                    <small>Estimated market volatility, historically 10-20% as per the CBOE Volatility Index</small>
+                </label>
+                <input type="number" pattern="/d*" id="market-volatility" min="0" value="20" />
+            </div>
+
+        </form>
+    </details>
+
+    <script async>
+        function monthlyToAnnualRate(rate) {
+            return Math.pow(rate + 1, 12) - 1;
+        }
+
+        function annualToMonthlyRate(rate) {
+            return Math.pow(rate + 1, 1 / 12) - 1;
+        }
+
+        (async function () {
+            const rootElement = document.currentScript.parentElement;
+            await CacheHelper.loadGoogleCharts();
+
+            const chartElem = rootElement.querySelector('#chart-container');
+
+            const returnRateSelector = rootElement.querySelector('#expected-return');
+            const volatilitySelector = rootElement.querySelector('#market-volatility');
+
+            window.simulate = function simulate() {
+                const projectedYears = 10;
+
+                const returnRateValue = Number(returnRateSelector.value) / 100;
+                const volatilityValue = Number(volatilitySelector.value) / 100;
+                const monthlyReturnRateValue = annualToMonthlyRate(returnRateValue);
+
+                // Estimate the returns using a log-normal distribution
+                const averageReturn = Math.log(1 + returnRateValue)
+                const logReturns = numbers.random.distribution.logNormal(projectedYears * 12, averageReturn, volatilityValue);
+                const percentReturns = logReturns.map(x => 1 + ((x - 1) / 12));
+
+                const data = [];
+                let flags = { 'bankrupt': false };
+                let currentReturn = 1;
+                for (let i = 0; i < projectedYears * 12; i++) {
+                    const halfYears = (Math.round(i / 12 * 2) / 2).toFixed(1).replace('.0', '');
+                    data.push({
+                        'month': i,
+                        'year': Math.floor(i / 12),
+                        'xlabel': `${halfYears} years`,
+                        'date': `${Math.floor(i / 12)} years and ${i % 12} months`,
+                        'return': (currentReturn - 1) * 100,
+                    });
+
+                    if (currentReturn <= 0.01 && !flags['bankrupt']) {
+                        flags['bankrupt'] = true;
+                        data[data.length - 1]['bankrupt'] = true;
+                        data[data.length - 1]['annotation'] = "BANKRUPTCY";
+                    }
+
+                    currentReturn *= percentReturns[i];
+                }
+                console.log(data);
+
+                const tooltip = x =>
+                    `${x['date']}\n` +
+                    `${Formatter.percent(x['return'] / 100)} Return`;
+
+                const dataTable = new google.visualization.DataTable();
+                dataTable.addColumn({ label: 'Time', type: 'string' });
+                // dataTable.addColumn({ label: 'Month', type: 'number' });
+                dataTable.addColumn({ type: 'string', role: 'annotation' });
+                dataTable.addColumn({ label: 'Return', type: 'number' });
+                dataTable.addColumn({ type: 'string', role: 'tooltip' });
+                dataTable.addRows(data
+                    .map(x => [x['xlabel'], x['annotation'], x['return'], tooltip(x)]));
+
+                const chartObject = new google.visualization.AreaChart(chartElem);
+                chartObject.draw(dataTable, Object.assign({}, GOOGLE_CHARTS_CONFIG, {
+                    title: `Market Simulator by FinMango`,
+                    curveType: 'function',
+                    series: [{ 'color': '#757575' }],
+                    intervals: { 'style': 'area' },
+                    vAxis: { textPosition: 'out', minValue: -100, format: '#\'%\'' },
+                    interpolateNulls: true,
+                    annotations: {
+                        style: 'line'
+                    },
+                }));
+
+                // Hide loading spinner
+                chartElem.style.backgroundImage = 'none';
+            }
+
+
+            new ComponentHelper()
+                .addFormData(rootElement.querySelector('form'))
+                .onLoad(simulate)
+                .init();
+        })();
+    </script>
+</div>
